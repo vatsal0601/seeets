@@ -22,7 +22,7 @@ export const metadata = {
     type: "website",
     locale: "en_US",
     siteName: "seeets",
-    images: [{ url: "/og-image.png", alt: "seeets" }],
+    images: [{ url: "https://seeets.vercel.app/og-image.png", alt: "seeets" }],
   },
   twitter: {
     title: "seeets",
@@ -31,7 +31,7 @@ export const metadata = {
     creator: "@vatsal0601",
     site: "@vatsal0601",
     card: "summary_large_image",
-    images: [{ url: "/og-image.png", alt: "seeets" }],
+    images: [{ url: "https://seeets.vercel.app/og-image.png", alt: "seeets" }],
     creatorId: "vatsal0601",
     siteId: "vatsal0601",
   },
