@@ -1,25 +1,30 @@
+import { Navbar } from "~/components/navbar";
+
 export default function HomePage() {
   return (
-    <main className="grid h-full place-content-center bg-pattern">
-      <div className="relative p-5 lg:p-10">
-        <h1 className="text-center text-4xl font-extrabold tracking-tight lg:text-5xl">
-          seeets
-        </h1>
-        <p className="max-w-64 text-center leading-7 md:max-w-sm">
-          a free and open-source platform for tracking workouts and analyzing
-          progress.
-        </p>
-        <p className="text-center text-sm text-muted-foreground">
-          (coming soon)
-        </p>
-        <TargetboardIcon className="absolute -top-12 left-0 size-20 md:left-10 lg:size-24" />
-        <DumbbellIcon className="absolute -top-12 right-0 size-20 md:right-0 lg:size-24" />
-        <StopwatchIcon className="absolute -left-12 top-10 size-20 md:top-12 lg:size-24" />
-        <BicepIcon className="absolute -right-12 top-10 size-20 md:top-12 lg:size-24" />
-        <ScaleIcon className="absolute -bottom-12 left-0 size-20 md:-bottom-16 md:left-10 lg:size-24" />
-        <TreadmillIcon className="absolute -bottom-12 right-0 size-20 md:-bottom-16 md:right-10 lg:size-24" />
-      </div>
-    </main>
+    <>
+      <Navbar />
+      <main className="grid h-full place-content-center bg-pattern">
+        <div className="relative p-5 lg:p-10">
+          <h1 className="text-center text-4xl font-extrabold tracking-tight lg:text-5xl">
+            seeets
+          </h1>
+          <p className="max-w-64 text-center leading-7 md:max-w-sm">
+            a free and open-source platform for tracking workouts and analyzing
+            progress.
+          </p>
+          <p className="text-center text-sm text-muted-foreground">
+            (coming soon)
+          </p>
+          <TargetboardIcon className="absolute -top-12 left-0 size-20 fill-primary/50 md:left-10 lg:size-24" />
+          <DumbbellIcon className="absolute -top-12 right-0 size-20 fill-primary/50 md:right-0 lg:size-24" />
+          <StopwatchIcon className="absolute -left-12 top-10 size-20 fill-primary/50 md:top-12 lg:size-24" />
+          <BicepIcon className="absolute -right-12 top-10 size-20 fill-primary/50 md:top-12 lg:size-24" />
+          <ScaleIcon className="absolute -bottom-12 left-0 size-20 fill-primary/50 md:-bottom-16 md:left-10 lg:size-24" />
+          <TreadmillIcon className="absolute -bottom-12 right-0 size-20 fill-primary/50 md:-bottom-16 md:right-10 lg:size-24" />
+        </div>
+      </main>
+    </>
   );
 }
 
