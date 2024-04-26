@@ -1,11 +1,9 @@
-import "~/styles/globals.css";
-
-import { GeistSans } from "geist/font/sans";
-import { GeistMono } from "geist/font/mono";
-
 import { Analytics } from "@vercel/analytics/react";
-
+import { GeistMono } from "geist/font/mono";
+import { GeistSans } from "geist/font/sans";
+import { ThemeProvider } from "~/components/theme-provider";
 import { cn } from "~/lib/utils";
+import "~/styles/globals.css";
 
 export const metadata = {
   title: "seeets",
@@ -47,8 +45,16 @@ export default function RootLayout({
       <html
         lang="en"
         className={cn("h-full", GeistSans.variable, GeistMono.variable)}
+        suppressHydrationWarning
       >
-        <body className="h-full">{children}</body>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <body className="h-full">{children}</body>
+        </ThemeProvider>
       </html>
       <Analytics />
     </>

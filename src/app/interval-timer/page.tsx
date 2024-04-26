@@ -1,12 +1,13 @@
 "use client";
 
-import * as React from "react";
-
 import { Minus, Plus } from "lucide-react";
+import * as React from "react";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
-import { TimePickerInput } from "~/components/ui/time-picker-input";
 import { Label } from "~/components/ui/label";
+import { TimePickerInput } from "~/components/ui/time-picker-input";
+
+const MAX_SETS = 50;
 
 const getFormattedTime = (time: Date) => {
   const minutes = time.getMinutes();
@@ -30,16 +31,32 @@ function SetsInput({
   sets: number;
   setSets: React.Dispatch<React.SetStateAction<number>>;
 }) {
-  const handleSetChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSets(parseInt(e.target.value, 10));
-  };
-
   const handleSetIncrement = () => {
-    setSets((prev) => prev + 1);
+    setSets((prev) => (prev < MAX_SETS ? prev + 1 : prev));
   };
 
   const handleSetDecrement = () => {
     setSets((prev) => (prev > 0 ? prev - 1 : prev));
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Tab") return;
+    e.preventDefault();
+    if (["ArrowUp", "ArrowDown"].includes(e.key)) {
+      const step = e.key === "ArrowUp" ? 1 : -1;
+      const newValue = sets + step;
+
+      if (newValue < 0) return;
+
+      setSets(newValue);
+    }
+    if (e.key >= "0" && e.key <= "9") {
+      let newValue = sets === 0 ? e.key : sets.toString() + e.key;
+
+      if (parseInt(newValue, 10) > MAX_SETS) newValue = e.key;
+
+      setSets(parseInt(newValue, 10));
+    }
   };
 
   return (
@@ -58,11 +75,12 @@ function SetsInput({
         </Button>
         <Input
           id="sets"
-          type="number"
+          type="tel"
+          inputMode="decimal"
           min={0}
           value={sets}
-          onChange={handleSetChange}
-          className="text-center font-mono text-base tabular-nums [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+          onKeyDown={handleKeyDown}
+          className="w-full text-center font-mono text-base tabular-nums caret-transparent focus:bg-accent focus:text-accent-foreground [&::-webkit-inner-spin-button]:appearance-none"
         />
         <Button
           variant="outline"
@@ -73,6 +91,11 @@ function SetsInput({
           <Plus />
         </Button>
       </div>
+      {sets >= MAX_SETS && (
+        <p className="text-error text-center text-sm text-destructive-foreground">
+          you&apos;ve reached max sets
+        </p>
+      )}
     </Card>
   );
 }
