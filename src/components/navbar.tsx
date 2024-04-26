@@ -5,8 +5,8 @@ import { ThemeToggle } from "~/components/theme-toggle";
 
 function Navbar() {
   return (
-    <nav className="fixed top-0 w-full bg-background/10 p-3 backdrop-blur-[2px]">
-      <div className="flex items-center justify-between">
+    <nav className="fixed top-0 w-full bg-background/10 backdrop-blur-[2px]">
+      <div className="container flex h-16 items-center justify-between">
         <h3 className="text-2xl font-extrabold tracking-tight lg:text-3xl">
           seeets
         </h3>
