@@ -275,7 +275,10 @@ function IntervalTimerForModal() {
 
     return (
       <div
-        className={cn("flex flex-col items-center gap-4", !isDesktop && "px-4")}
+        className={cn(
+          "flex flex-col items-center gap-4",
+          !isDesktop && "overflow-auto px-4",
+        )}
       >
         <div className="grid w-full gap-4 md:max-w-md">
           <SetsInput sets={sets} setSets={setSets} />
@@ -299,7 +302,12 @@ function IntervalTimerForModal() {
 
   if (!prepare || !work || !rest) {
     return (
-      <div className={cn("grid place-content-center", !isDesktop && "px-4")}>
+      <div
+        className={cn(
+          "grid place-content-center",
+          !isDesktop && "overflow-auto px-4",
+        )}
+      >
         <p className="text-center text-lg">oops something went wrong! :(</p>
       </div>
     );
@@ -307,7 +315,10 @@ function IntervalTimerForModal() {
 
   return (
     <div
-      className={cn("flex flex-col items-center gap-4", !isDesktop && "px-4")}
+      className={cn(
+        "flex flex-col items-center gap-4",
+        !isDesktop && "overflow-auto px-4",
+      )}
     >
       <div className="grid w-full flex-grow place-content-center md:max-w-md">
         <h1 className="text-center font-mono text-8xl font-extrabold tabular-nums tracking-tight lg:text-9xl">

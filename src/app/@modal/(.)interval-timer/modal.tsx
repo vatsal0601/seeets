@@ -59,7 +59,7 @@ export function IntervalTimerModal({
 
   return (
     <Drawer open={open} onOpenChange={handleOnOpenChange}>
-      <DrawerContent>
+      <DrawerContent className="max-h-[96%]">
         <DrawerHeader>
           <DrawerTitle className="text-2xl">interval timer</DrawerTitle>
         </DrawerHeader>
