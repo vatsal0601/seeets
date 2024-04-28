@@ -1,34 +1,72 @@
-import { Timer } from "lucide-react";
+import { Timer, LogIn } from "lucide-react";
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
+import {
+  ClerkLoading,
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+} from "@clerk/nextjs";
 import { ThemeToggle } from "~/components/theme-toggle";
+import { Skeleton } from "~/components/ui/skeleton";
+import { NavbarTitle } from "~/components/navbar-title";
 
 function Navbar() {
   return (
-    <nav className="fixed top-0 w-full bg-background/10 backdrop-blur-[2px]">
-      <div className="flex h-16 items-center justify-between px-5 lg:px-10">
-        <h3 className="text-2xl font-extrabold tracking-tight lg:text-3xl">
-          seeets
-        </h3>
-        <ul className="flex items-center gap-3">
-          <li>
-            <Button size="sm" className="hidden h-10 lg:inline-flex" asChild>
-              <Link href="/interval-timer">
-                <Timer className="mr-1 size-[1.2rem]" />
-                <span>interval timer</span>
-              </Link>
-            </Button>
-            <Button size="icon" className="lg:hidden" asChild>
-              <Link href="/interval-timer">
-                <Timer className="size-[1.2rem]" />
-              </Link>
-            </Button>
-          </li>
-          <li className="size-10">
-            <ThemeToggle />
-          </li>
-        </ul>
-      </div>
+    <nav className="absolute top-0 flex h-16 w-full items-center justify-between px-5 lg:px-10">
+      <NavbarTitle />
+      <ul className="flex items-center gap-3">
+        <li>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="hidden h-10 lg:inline-flex"
+            asChild
+          >
+            <Link href="/interval-timer">interval timer</Link>
+          </Button>
+          <Button variant="ghost" size="icon" className="lg:hidden" asChild>
+            <Link href="/interval-timer">
+              <Timer className="size-5" />
+            </Link>
+          </Button>
+        </li>
+        <li>
+          <ClerkLoading>
+            <Skeleton className="h-10 w-10 rounded-full" />
+          </ClerkLoading>
+          <SignedIn>
+            <UserButton
+              appearance={{
+                elements: {
+                  userButtonBox: "h-10 w-10 rounded-full",
+                  userButtonAvatarBox: "h-10 w-10 rounded-full",
+                },
+              }}
+            />
+          </SignedIn>
+          <SignedOut>
+            <SignInButton mode="modal">
+              <div>
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  className="hidden h-10 lg:inline-flex"
+                >
+                  login
+                </Button>
+                <Button variant="secondary" size="icon" className="lg:hidden">
+                  <LogIn className="size-5" />
+                </Button>
+              </div>
+            </SignInButton>
+          </SignedOut>
+        </li>
+        <li>
+          <ThemeToggle />
+        </li>
+      </ul>
     </nav>
   );
 }

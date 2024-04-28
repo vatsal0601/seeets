@@ -1,34 +1,23 @@
-// Example model schema from the Drizzle docs
-// https://orm.drizzle.team/docs/sql-schema-declaration
-
-import { sql } from "drizzle-orm";
 import {
-  index,
-  pgTableCreator,
+  pgTable,
   serial,
+  text,
+  numeric,
   timestamp,
-  varchar,
+  time,
 } from "drizzle-orm/pg-core";
 
-/**
- * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
- * database instance for multiple projects.
- *
- * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
- */
-export const createTable = pgTableCreator((name) => `seeets_${name}`);
+export const IntervalTimer = pgTable("interval_timer", {
+  id: serial("id").primaryKey(),
+  userId: text("userId").notNull(),
+  name: text("name").notNull(),
+  sets: numeric("sets").notNull(),
+  prepare: time("prepare").notNull(),
+  work: time("work").notNull(),
+  rest: time("rest").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().notNull(),
+});
 
-export const posts = createTable(
-  "post",
-  {
-    id: serial("id").primaryKey(),
-    name: varchar("name", { length: 256 }),
-    createdAt: timestamp("created_at")
-      .default(sql`CURRENT_TIMESTAMP`)
-      .notNull(),
-    updatedAt: timestamp("updatedAt"),
-  },
-  (example) => ({
-    nameIndex: index("name_idx").on(example.name),
-  })
-);
+export type InsertInetervalTimer = typeof IntervalTimer.$inferInsert;
+export type SelectIntervalTimer = typeof IntervalTimer.$inferSelect;

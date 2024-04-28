@@ -1,7 +1,10 @@
 import { Analytics } from "@vercel/analytics/react";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
+import { Footer } from "~/components/footer";
+import { Navbar } from "~/components/navbar";
 import { ThemeProvider } from "~/components/theme-provider";
+import { ThemedClerkProvider } from "~/components/themed-clerk-provider";
 import { cn } from "~/lib/utils";
 import "~/styles/globals.css";
 
@@ -37,15 +40,17 @@ export const metadata = {
 
 export default function RootLayout({
   children,
+  modal,
 }: {
   children: React.ReactNode;
+  modal: React.ReactNode;
 }) {
   return (
-    <>
+    <ThemedClerkProvider>
       <html
         lang="en"
-        className={cn("h-full", GeistSans.variable, GeistMono.variable)}
-        suppressHydrationWarning
+        className={cn("h-svh", GeistSans.variable, GeistMono.variable)}
+        suppressHydrationWarning={true}
       >
         <ThemeProvider
           attribute="class"
@@ -53,10 +58,15 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <body className="h-full">{children}</body>
+          <body className="relative h-svh">
+            <Navbar />
+            {children}
+            {modal}
+            <Footer />
+          </body>
         </ThemeProvider>
       </html>
       <Analytics />
-    </>
+    </ThemedClerkProvider>
   );
 }
