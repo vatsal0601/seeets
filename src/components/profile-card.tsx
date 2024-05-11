@@ -1,7 +1,11 @@
 "use client";
 
-import { SignOutButton } from "@clerk/nextjs";
+import { useClerk } from "@clerk/nextjs";
 import { format } from "date-fns";
+import { useRouter } from "next/navigation";
+import * as React from "react";
+import { Icons } from "~/components/ui/icons";
+import { useMediaQuery } from "~/hooks/use-media-query";
 import { ConditionalWrapper, cn, getUserInitials } from "~/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
@@ -15,7 +19,6 @@ import {
 } from "./ui/card";
 import { Label } from "./ui/label";
 import { Switch } from "./ui/switch";
-import { useMediaQuery } from "~/hooks/use-media-query";
 
 interface User {
   imageUrl: string;
@@ -34,7 +37,16 @@ function ProfileCard({
   createdAt,
   shouldWrapInCard,
 }: User) {
+  const [isLoading, setIsLoading] = React.useState(false);
+
   const isDesktop = useMediaQuery("(min-width: 768px)");
+  const { signOut } = useClerk();
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    setIsLoading(true);
+    await signOut(() => router.replace("/"));
+  };
 
   return (
     <ConditionalWrapper
@@ -76,18 +88,17 @@ function ProfileCard({
           </div>
         </CardContent>
         <CardFooter className={cn(!shouldWrapInCard && "p-0")}>
-          <div className="h-10 w-full">
-            <SignOutButton>
-              <Button
-                variant={
-                  !shouldWrapInCard && !isDesktop ? "outline" : "default"
-                }
-                className="w-full"
-              >
-                sign-out
-              </Button>
-            </SignOutButton>
-          </div>
+          <Button
+            variant={!shouldWrapInCard && !isDesktop ? "outline" : "default"}
+            onClick={handleSignOut}
+            className="w-full"
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <Icons.spinner className="mr-2 size-5 animate-spin" />
+            ) : null}
+            <span>{isLoading ? "signing out..." : "sign-out"}</span>
+          </Button>
         </CardFooter>
       </ConditionalWrapper>
     </ConditionalWrapper>
