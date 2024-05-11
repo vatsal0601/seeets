@@ -3,27 +3,16 @@
 import { useRouter } from "next/navigation";
 import * as React from "react";
 import { Button } from "~/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "~/components/ui/dialog";
+import { Dialog, DialogContent } from "~/components/ui/dialog";
 import {
   Drawer,
   DrawerClose,
   DrawerContent,
   DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
 } from "~/components/ui/drawer";
 import { useMediaQuery } from "~/hooks/use-media-query";
 
-export function IntervalTimerModal({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export function ProfileModal({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = React.useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const router = useRouter();
@@ -47,12 +36,7 @@ export function IntervalTimerModal({
   if (isDesktop) {
     return (
       <Dialog open={open} onOpenChange={handleOnOpenChange}>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle className="text-2xl">interval timer</DialogTitle>
-          </DialogHeader>
-          {children}
-        </DialogContent>
+        <DialogContent className="sm:max-w-[425px]">{children}</DialogContent>
       </Dialog>
     );
   }
@@ -60,13 +44,10 @@ export function IntervalTimerModal({
   return (
     <Drawer open={open} onOpenChange={handleOnOpenChange}>
       <DrawerContent className="max-h-[96%]">
-        <DrawerHeader>
-          <DrawerTitle className="text-2xl">interval timer</DrawerTitle>
-        </DrawerHeader>
         {children}
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
-            <Button variant="outline">close</Button>
+            <Button>close</Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>

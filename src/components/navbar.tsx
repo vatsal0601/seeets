@@ -1,18 +1,19 @@
-import { Timer, LogIn } from "lucide-react";
+import { currentUser } from "@clerk/nextjs/server";
+import { LogIn, Timer } from "lucide-react";
 import Link from "next/link";
-import { Button } from "~/components/ui/button";
-import {
-  ClerkLoading,
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  UserButton,
-} from "@clerk/nextjs";
-import { ThemeToggle } from "~/components/theme-toggle";
-import { Skeleton } from "~/components/ui/skeleton";
+import { Suspense } from "react";
 import { NavbarTitle } from "~/components/navbar-title";
+import { ThemeToggle } from "~/components/theme-toggle";
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
+import { Button } from "~/components/ui/button";
+import { Skeleton } from "~/components/ui/skeleton";
+import { getUserInitials } from "~/lib/utils";
 
-function Navbar() {
+async function Navbar() {
+  const user = await currentUser();
+
+  const isLoggedIn = user !== null;
+
   return (
     <nav className="absolute top-0 flex h-16 w-full items-center justify-between px-5 lg:px-10">
       <NavbarTitle />
@@ -33,22 +34,18 @@ function Navbar() {
           </Button>
         </li>
         <li>
-          <ClerkLoading>
-            <Skeleton className="h-10 w-10 rounded-full" />
-          </ClerkLoading>
-          <SignedIn>
-            <UserButton
-              appearance={{
-                elements: {
-                  userButtonBox: "h-10 w-10 rounded-full",
-                  userButtonAvatarBox: "h-10 w-10 rounded-full",
-                },
-              }}
-            />
-          </SignedIn>
-          <SignedOut>
-            <SignInButton mode="modal">
-              <div>
+          <Suspense fallback={<Skeleton className="h-10 w-10 rounded-full" />}>
+            {isLoggedIn ? (
+              <Link href="/profile">
+                <Avatar>
+                  <AvatarImage src={user.imageUrl} />
+                  <AvatarFallback>
+                    {getUserInitials(user.firstName, user.lastName)}
+                  </AvatarFallback>
+                </Avatar>
+              </Link>
+            ) : (
+              <Link href="/sign-in">
                 <Button
                   variant="secondary"
                   size="sm"
@@ -59,9 +56,9 @@ function Navbar() {
                 <Button variant="secondary" size="icon" className="lg:hidden">
                   <LogIn className="size-5" />
                 </Button>
-              </div>
-            </SignInButton>
-          </SignedOut>
+              </Link>
+            )}
+          </Suspense>
         </li>
         <li>
           <ThemeToggle />

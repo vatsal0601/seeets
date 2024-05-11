@@ -4,7 +4,7 @@ import { GeistSans } from "geist/font/sans";
 import { Footer } from "~/components/footer";
 import { Navbar } from "~/components/navbar";
 import { ThemeProvider } from "~/components/theme-provider";
-import { ThemedClerkProvider } from "~/components/themed-clerk-provider";
+import { ClerkProvider } from "@clerk/nextjs";
 import { cn } from "~/lib/utils";
 import "~/styles/globals.css";
 
@@ -46,7 +46,7 @@ export default function RootLayout({
   modal: React.ReactNode;
 }) {
   return (
-    <ThemedClerkProvider>
+    <ClerkProvider>
       <html
         lang="en"
         className={cn("h-svh", GeistSans.variable, GeistMono.variable)}
@@ -67,6 +67,6 @@ export default function RootLayout({
         </ThemeProvider>
       </html>
       <Analytics />
-    </ThemedClerkProvider>
+    </ClerkProvider>
   );
 }

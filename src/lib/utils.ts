@@ -5,6 +5,24 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export const getUserInitials = (
+  firstName: string | null,
+  lastName: string | null,
+) => {
+  if (!firstName || !lastName) return "JD";
+  return `${firstName.charAt(0)}${lastName.charAt(0)}`;
+};
+
+export const ConditionalWrapper = ({
+  condition,
+  wrapper,
+  children,
+}: {
+  condition: boolean;
+  wrapper: (children: React.ReactNode) => React.ReactNode;
+  children: React.ReactNode;
+}) => (condition ? wrapper(children) : children);
+
 /**
  * regular expression to check for valid hour format (01-23)
  */

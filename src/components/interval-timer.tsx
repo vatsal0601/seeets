@@ -288,9 +288,9 @@ function IntervalTimerForModal() {
         </div>
         <div className="w-full md:max-w-md">
           <Button
-            size="lg"
+            size={isDesktop ? "lg" : "default"}
             onClick={toggleTimer}
-            className="w-full text-lg"
+            className={cn("w-full", isDesktop && "text-lg")}
             disabled={isDisabled}
           >
             start
@@ -329,7 +329,11 @@ function IntervalTimerForModal() {
         </p>
       </div>
       <div className="w-full md:max-w-md">
-        <Button onClick={toggleTimer} size="lg" className="w-full text-lg">
+        <Button
+          size={isDesktop ? "lg" : "default"}
+          onClick={toggleTimer}
+          className={cn("w-full", isDesktop && "text-lg")}
+        >
           cancel
         </Button>
       </div>
