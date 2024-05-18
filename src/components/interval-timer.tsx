@@ -7,15 +7,7 @@ import { Card } from "~/components/ui/card";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { TimePickerInput } from "~/components/ui/time-picker-input";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "~/components/ui/tooltip";
 import { useIntervalTimer } from "~/hooks/use-interval-timer";
-import { useMediaQuery } from "~/hooks/use-media-query";
-import { cn } from "~/lib/utils";
 
 const MAX_SETS = 50;
 
@@ -180,7 +172,7 @@ function IntervalTimerForPage({ userId }: { userId: string | null }) {
     const isDisabled = areSetsZero || isPrepareZero || isWorkZero || isRestZero;
 
     return (
-      <main className="flex h-full flex-col items-center justify-between gap-4 bg-muted/20 px-5 pb-8 pt-16 lg:px-10">
+      <main className="page-container flex flex-col items-center justify-between gap-4 bg-muted/20">
         <div className="grid w-full gap-4 md:max-w-md">
           <div className="flex items-center justify-between">
             <h3 className="text-2xl font-semibold leading-none tracking-tight">
@@ -189,7 +181,7 @@ function IntervalTimerForPage({ userId }: { userId: string | null }) {
             {userId ? (
               <Button variant="outline">
                 <Save className="mr-2 size-5" />
-                <span>same timer</span>
+                <span>save timer</span>
               </Button>
             ) : null}
           </div>
@@ -216,7 +208,7 @@ function IntervalTimerForPage({ userId }: { userId: string | null }) {
 
   if (!prepare || !work || !rest) {
     return (
-      <main className="grid h-full place-content-center bg-muted/20 p-5 lg:p-10">
+      <main className="page-container grid place-content-center bg-muted/20">
         <h1 className="text-center text-4xl font-extrabold tracking-tight lg:text-5xl">
           oops something went wrong! :(
         </h1>
@@ -225,7 +217,7 @@ function IntervalTimerForPage({ userId }: { userId: string | null }) {
   }
 
   return (
-    <main className="flex h-full flex-col items-center justify-between gap-4 bg-muted/20 px-5 pb-8 pt-16 lg:px-10">
+    <main className="page-container flex flex-col items-center justify-between gap-4 bg-muted/20">
       <div className="grid w-full flex-grow place-content-center md:max-w-md">
         <h1 className="text-center font-mono text-8xl font-extrabold tabular-nums tracking-tight lg:text-9xl">
           {dataToDisplay.time}
@@ -243,102 +235,4 @@ function IntervalTimerForPage({ userId }: { userId: string | null }) {
   );
 }
 
-function IntervalTimerForModal() {
-  const [sets, setSets] = React.useState<number>(6);
-  const [prepare, setPrepare] = React.useState<Date | undefined>(
-    new Date(new Date().setHours(0, 0, 10, 0)),
-  );
-  const [work, setWork] = React.useState<Date | undefined>(
-    new Date(new Date().setHours(0, 0, 12, 0)),
-  );
-  const [rest, setRest] = React.useState<Date | undefined>(
-    new Date(new Date().setHours(0, 0, 24, 0)),
-  );
-  const { isTimerRunning, toggleTimer, dataToDisplay } = useIntervalTimer({
-    sets,
-    prepare,
-    work,
-    rest,
-  });
-  const isDesktop = useMediaQuery("(min-width: 768px)");
-
-  if (!isTimerRunning) {
-    const areSetsZero = sets === 0;
-    const isPrepareZero =
-      prepare && prepare.getMinutes() === 0 && prepare.getSeconds() === 0;
-    const isWorkZero =
-      work && work.getMinutes() === 0 && work.getSeconds() === 0;
-    const isRestZero =
-      rest && rest.getMinutes() === 0 && rest.getSeconds() === 0;
-    // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-    const isDisabled = areSetsZero || isPrepareZero || isWorkZero || isRestZero;
-
-    return (
-      <div
-        className={cn(
-          "flex flex-col items-center gap-4",
-          !isDesktop && "overflow-auto px-4",
-        )}
-      >
-        <div className="grid w-full gap-4 md:max-w-md">
-          <SetsInput sets={sets} setSets={setSets} />
-          <TimeInput label="prepare" date={prepare} setDate={setPrepare} />
-          <TimeInput label="work" date={work} setDate={setWork} />
-          <TimeInput label="rest" date={rest} setDate={setRest} />
-        </div>
-        <div className="w-full md:max-w-md">
-          <Button
-            size={isDesktop ? "lg" : "default"}
-            onClick={toggleTimer}
-            className={cn("w-full", isDesktop && "text-lg")}
-            disabled={isDisabled}
-          >
-            start
-          </Button>
-        </div>
-      </div>
-    );
-  }
-
-  if (!prepare || !work || !rest) {
-    return (
-      <div
-        className={cn(
-          "grid place-content-center",
-          !isDesktop && "overflow-auto px-4",
-        )}
-      >
-        <p className="text-center text-lg">oops something went wrong! :(</p>
-      </div>
-    );
-  }
-
-  return (
-    <div
-      className={cn(
-        "flex flex-col items-center gap-4",
-        !isDesktop && "overflow-auto px-4",
-      )}
-    >
-      <div className="grid w-full flex-grow place-content-center md:max-w-md">
-        <h1 className="text-center font-mono text-8xl font-extrabold tabular-nums tracking-tight lg:text-9xl">
-          {dataToDisplay.time}
-        </h1>
-        <p className="text-center text-4xl text-muted-foreground">
-          {dataToDisplay.phase}
-        </p>
-      </div>
-      <div className="w-full md:max-w-md">
-        <Button
-          size={isDesktop ? "lg" : "default"}
-          onClick={toggleTimer}
-          className={cn("w-full", isDesktop && "text-lg")}
-        >
-          cancel
-        </Button>
-      </div>
-    </div>
-  );
-}
-
-export { IntervalTimerForModal, IntervalTimerForPage };
+export { IntervalTimerForPage };

@@ -1,6 +1,6 @@
 export default function DashboardPage() {
   return (
-    <main className="h-full">
+    <main className="page-container">
       <h1>Dashboard</h1>
     </main>
   );

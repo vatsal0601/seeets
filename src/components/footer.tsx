@@ -4,7 +4,7 @@ import { Button } from "~/components/ui/button";
 function Footer() {
   return (
     <footer className="flex h-16 items-center justify-between border-t px-5 lg:px-10">
-      <p className="text-muted-foreground">
+      <p className="text-sm text-muted-foreground">
         <span>made by</span>
         <Link
           href="https://twitter.com/vatsal0601"

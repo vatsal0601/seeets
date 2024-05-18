@@ -49,7 +49,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html
         lang="en"
-        className={cn("h-svh", GeistSans.variable, GeistMono.variable)}
+        className={cn("min-h-svh", GeistSans.variable, GeistMono.variable)}
         suppressHydrationWarning={true}
       >
         <ThemeProvider
@@ -58,7 +58,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <body className="relative h-svh">
+          <body className="relative min-h-svh">
             <Navbar />
             {children}
             {modal}

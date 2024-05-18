@@ -15,7 +15,7 @@ import { Icons } from "./ui/icons";
 
 function SignInPage() {
   return (
-    <main className="grid h-full w-full grow items-center p-5 sm:justify-center lg:p-10">
+    <main className="page-container grid items-center sm:justify-center">
       <SignIn.Root>
         <Clerk.Loading>
           {(isGlobalLoading) => (

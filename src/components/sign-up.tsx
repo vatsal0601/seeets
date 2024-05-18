@@ -15,7 +15,7 @@ import { Icons } from "./ui/icons";
 
 function SignUpPage() {
   return (
-    <main className="grid h-full w-full grow items-center p-5 sm:justify-center lg:p-10">
+    <main className="page-container grid items-center sm:justify-center">
       <SignUp.Root>
         <Clerk.Loading>
           {(isGlobalLoading) => (

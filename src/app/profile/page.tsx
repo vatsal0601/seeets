@@ -10,7 +10,7 @@ export default async function ProfilePage() {
   }
 
   return (
-    <main className="flex h-full items-center justify-center px-5 pb-8 pt-16 lg:px-10">
+    <main className="page-container flex items-center justify-center">
       <ProfileCard
         imageUrl={user.imageUrl}
         firstName={user.firstName ?? "John"}

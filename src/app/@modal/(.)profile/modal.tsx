@@ -45,7 +45,7 @@ export function ProfileModal({ children }: { children: React.ReactNode }) {
     <Drawer open={open} onOpenChange={handleOnOpenChange}>
       <DrawerContent className="max-h-[96%]">
         {children}
-        <DrawerFooter className="pt-2">
+        <DrawerFooter>
           <DrawerClose asChild>
             <Button>close</Button>
           </DrawerClose>
